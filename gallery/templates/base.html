@@ -36,13 +36,13 @@
                     <a class="nav-link nav-link-1 {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Photos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-2" href="videos.html">Videos</a>
+                    <a class="nav-link nav-link-2 {% if request.path == '/videos/' %}active{% endif %}" href="">Videos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-3 {% if request.path == 'about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
+                    <a class="nav-link nav-link-3 {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-4" href="contact.html">Contact</a>
+                    <a class="nav-link nav-link-4 {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
                 </li>
             </ul>
             </div>
