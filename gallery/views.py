@@ -15,3 +15,6 @@ def photo_detail(request):
 
 def video(request):
   return render(request, 'videos.html')
+
+def video_detail(request):
+  return render(request, 'video-detail.html')
