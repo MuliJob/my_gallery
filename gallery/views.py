@@ -9,3 +9,6 @@ def about(request):
 
 def contact(request):
   return render(request, 'contact.html')
+
+def photo_detail(request):
+  return render(request, 'photo-detail.html')
