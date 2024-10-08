@@ -12,3 +12,6 @@ def contact(request):
 
 def photo_detail(request):
   return render(request, 'photo-detail.html')
+
+def video(request):
+  return render(request, 'videos.html')

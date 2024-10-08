@@ -36,7 +36,7 @@
                     <a class="nav-link nav-link-1 {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Photos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-2 {% if request.path == '/videos/' %}active{% endif %}" href="">Videos</a>
+                    <a class="nav-link nav-link-2 {% if request.path == '/videos/' %}active{% endif %}" href="{% url 'video' %}">Videos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-3 {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
@@ -51,6 +51,8 @@
 
     {% block content %}
     {% endblock %}
+    {% block javascript %}
+    {% endblock javascript %}
 
     <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
       <div class="container-fluid tm-container-small">
