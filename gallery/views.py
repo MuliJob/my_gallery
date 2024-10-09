@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import CustomUser  # Import your custom user model
 
 def register(request):
     if request.method == 'POST':
@@ -9,12 +9,12 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        if CustomUser.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             messages.error(request, 'Email is already registered.')
             return render(request, 'login.html')  # Redirect back to the login page
 
         # Create a new user
-        user = CustomUser.objects.create_user(email=email, full_name=full_name, password=password)
+        user = User.objects.create_user(email=email, full_name=full_name, password=password)
         user.save()
         messages.success(request, 'Registration successful! Please log in.')
         return redirect('home')  # Redirect to the login page
