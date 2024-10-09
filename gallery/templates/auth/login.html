@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    background-color: #f7f7f7;
+}
+
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form container */
+.form-container {
+    background-color: #fff;
+    padding: 40px;
+    width: 350px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Toggle between login and register */
+.form-toggle {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    position: absolute;
+    top: -50px;
+    width: 100%;
+}
+
+.form-toggle a {
+    padding: 10px 20px;
+    background-color: #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.form-toggle a.active {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Input boxes */
+.input-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.input-box i {
+    padding: 10px;
+    color: #888;
+}
+
+.input-box input {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    background-color: #3498db;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Remember checkbox */
+.remember {
+    margin-bottom: 20px;
+}
+
+.remember label {
+    font-size: 14px;
+}
+
+.forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+/* Form Box */
+.form-box {
+    display: none;
+}
+
+.login-box {
+    display: block;
+}
+
+/* Media Queries */
+@media (max-width: 400px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .form-toggle a {
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="form-container">
+        <div class="form-toggle">
+            <a href="#" id="showLogin" class="active">Login</a>
+            <a href="#" id="showRegister">Register</a>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-box login-box">
+            <form action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
+                <h2>Login</h2>
+                <div class="input-box">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="email" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="remember">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+        <div class="form-box register-box">
+            <form action="{% url 'register' %}" method="POST">
+              {% csrf_token %}
+                <h2>Register</h2>
+                <div class="input-box">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+const showLogin = document.getElementById('showLogin');
+const showRegister = document.getElementById('showRegister');
+const loginBox = document.querySelector('.login-box');
+const registerBox = document.querySelector('.register-box');
+
+// Show Login Form
+showLogin.addEventListener('click', function() {
+    loginBox.style.display = 'block';
+    registerBox.style.display = 'none';
+    showLogin.classList.add('active');
+    showRegister.classList.remove('active');
+});
+
+// Show Register Form
+showRegister.addEventListener('click', function() {
+    registerBox.style.display = 'block';
+    loginBox.style.display = 'none';
+    showLogin.classList.remove('active');
+    showRegister.classList.add('active');
+});
+
+</script>
+
+</body>
+</html>
