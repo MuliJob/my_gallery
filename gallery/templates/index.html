@@ -28,7 +28,7 @@
                     <img src="{{ image.image.url }}" alt="{{ image.image_name }}" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>{{ image.image_category.name }}</h2>
-                        <a href="{% url 'gallery:photo_detail' %}">View more</a>
+                        <a href="{% url 'gallery:photo_detail' image.id %}">View more</a>
                     </figcaption>                    
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">

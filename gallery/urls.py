@@ -12,7 +12,7 @@ urlpatterns = [
   path('user-dashboard/', views.home, name='home'),
   path('about/', views.about, name='about'),
   path('contact/', views.contact, name='contact'),
-  path('photo-details/', views.photo_detail, name='photo_detail'),
+  path('photo-details/<int:image_id>/', views.photo_detail, name='photo_detail'),
   path('videos/', views.video, name='video'),
   path('video-detail', views.video_detail, name='video_detail'),
 ]

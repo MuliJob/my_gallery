@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Image
@@ -30,8 +30,16 @@ def contact(request):
   return render(request, 'contact.html')
 
 @login_required
-def photo_detail(request):
-  return render(request, 'photo-detail.html')
+def photo_detail(request, image_id):
+  image = get_object_or_404(Image, id=image_id)
+
+  related_images = Image.objects.filter(image_category=image.image_category).exclude(id=image.id)[:8]
+
+  context = {
+      'image': image,
+      'related_images': related_images
+  }
+  return render(request, 'photo-detail.html', context)
 
 @login_required
 def video(request):
