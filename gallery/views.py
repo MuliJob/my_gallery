@@ -42,6 +42,7 @@ def photo_detail(request, image_id):
   }
   return render(request, 'photo-detail.html', context)
 
+@login_required
 def download_image(request, image_id):
     image = get_object_or_404(Image, id=image_id)
 
@@ -52,6 +53,16 @@ def download_image(request, image_id):
     response['Content-Disposition'] = f'attachment; filename="{image.image_name}.jpg"'
 
     return response
+
+@login_required
+def search_images(request):
+    query = request.GET.get('category')
+    if query:
+        images = Image.objects.filter(image_category__name__icontains=query)
+    else:
+        images = Image.objects.none()
+    
+    return render(request, 'search-results.html', {'images': images, 'query': query})
 
 @login_required
 def video(request):
