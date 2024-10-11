@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Location, Category
+from .models import Location, Category, Image
 
 class LocationModelTest(TestCase):
 
@@ -67,3 +67,51 @@ class CategoryModelTest(TestCase):
         self.category.refresh_from_db()
         self.assertEqual(self.category.description, "Morning pictures")
         self.assertEqual(self.category.name, "Morning")
+
+class ImageModelTest(TestCase):
+    def setUp(self):
+        self.location = Location.objects.create(name="Test Location", description="Test Description")
+        self.category = Category.objects.create(name="Test Category", description="Test Category Description")
+        self.image = Image.objects.create(
+            image_name="Test Image",
+            image_description="Test Image Description",
+            image_location=self.location,
+            image_category=self.category
+        )
+
+    def test_save_image(self):
+        self.image.save_image()
+        self.assertIsNotNone(Image.objects.get(id=self.image.id))
+
+    def test_delete_image(self):
+        self.image.save_image()
+        self.image.delete_image()
+        with self.assertRaises(Image.DoesNotExist):
+            Image.objects.get(id=self.image.id)
+
+    def test_update_image(self):
+        new_name = "Updated Image Name"
+        new_description = "Updated Image Description"
+        self.image.update_image(image_name=new_name, image_description=new_description)
+        self.image.refresh_from_db()
+        self.assertEqual(self.image.image_name, new_name)
+        self.assertEqual(self.image.image_description, new_description)
+
+    def test_get_image_by_id(self):
+        retrieved_image = Image.get_image_by_id(self.image.id)
+        self.assertEqual(retrieved_image, self.image)
+
+    def test_get_image_by_id_non_existent(self):
+        retrieved_image = Image.get_image_by_id(99999)  # ID that doesn't exist
+        self.assertIsNone(retrieved_image)
+
+    def test_search_image(self):
+        images = Image.search_image("Test Category")
+        self.assertIn(self.image, images)
+
+    def test_filter_by_location(self):
+        images = Image.filter_by_location("Test Location")
+        self.assertIn(self.image, images)
+
+    def test_str_method(self):
+        self.assertEqual(str(self.image), "Test Image")
