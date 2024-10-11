@@ -13,6 +13,7 @@ urlpatterns = [
   path('about/', views.about, name='about'),
   path('contact/', views.contact, name='contact'),
   path('photo-details/<int:image_id>/', views.photo_detail, name='photo_detail'),
+  path('download/<int:image_id>/', views.download_image, name='download_image'),
   path('videos/', views.video, name='video'),
   path('video-detail', views.video_detail, name='video_detail'),
 ]

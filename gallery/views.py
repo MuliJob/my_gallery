@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Image
+from django.http import HttpResponse
 
 @login_required
 def home(request):
@@ -40,6 +41,17 @@ def photo_detail(request, image_id):
       'related_images': related_images
   }
   return render(request, 'photo-detail.html', context)
+
+def download_image(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+
+    image_file = image.image.open()
+
+    response = HttpResponse(image_file, content_type='image/jpeg')  # Adjust the content type as needed
+
+    response['Content-Disposition'] = f'attachment; filename="{image.image_name}.jpg"'
+
+    return response
 
 @login_required
 def video(request):
