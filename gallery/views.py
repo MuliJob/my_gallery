@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from .models import Image
 
 @login_required
 def home(request):
-  return render(request, 'index.html')
+  images = Image.objects.all()
+  return render(request, 'index.html', {'images': images})
 
 def authView(request):
   if request.method == 'POST':
