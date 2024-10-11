@@ -34,21 +34,27 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-1 {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Photos</a>
+                    <a class="nav-link nav-link-1 {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'gallery:home' %}">Photos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-2 {% if request.path == '/videos/' %}active{% endif %}" href="{% url 'video' %}">Videos</a>
+                    <a class="nav-link nav-link-2 {% if request.path == '/videos/' %}active{% endif %}" href="{% url 'gallery:video' %}">Videos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-3 {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
+                    <a class="nav-link nav-link-3 {% if request.path == '/about/' %}active{% endif %}" href="{% url 'gallery:about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-4 {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+                    <a class="nav-link nav-link-4 {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'gallery:contact' %}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="#" onclick="document.getElementById('logout-form').submit(); return false;">Logout</a>
                 </li>
             </ul>
             </div>
         </div>
     </nav>
+    <form id="logout-form" action="{% url 'gallery:logout' %}" method="post" style="display: none;">
+        {% csrf_token %}
+    </form>
 
     {% block content %}
     {% endblock %}
