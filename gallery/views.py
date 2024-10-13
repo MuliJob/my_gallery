@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Image
+from .models import Image, Video
 from django.http import HttpResponse
 
 @login_required
@@ -66,8 +66,17 @@ def search_images(request):
 
 @login_required
 def video(request):
-  return render(request, 'videos.html')
+  videos = Video.objects.all()
+  return render(request, 'videos.html', {'videos': videos})
 
 @login_required
-def video_detail(request):
-  return render(request, 'video-detail.html')
+def video_detail(request, video_id):
+  video = get_object_or_404(Video, id=video_id)
+
+  related_videos = Video.objects.filter(video_category=video.video_category).exclude(id=video.id)[:8]
+
+  context = {
+      'video': video,
+      'related_videos': related_videos
+  }
+  return render(request, 'video-detail.html', context)
