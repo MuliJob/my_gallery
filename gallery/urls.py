@@ -16,7 +16,7 @@ urlpatterns = [
   path('download/<int:image_id>/', views.download_image, name='download_image'),
   path('search/', views.search_images, name='search_images'),
   path('videos/', views.video, name='video'),
-  path('video-detail', views.video_detail, name='video_detail'),
+  path('video-detail/<int:video_id>/', views.video_detail, name='video_detail'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
