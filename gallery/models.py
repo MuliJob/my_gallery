@@ -122,3 +122,47 @@ class VideoCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+class Video(models.Model):
+    video = models.FileField(upload_to='videos/')
+    video_name = models.CharField(max_length=255)
+    video_description = models.TextField()
+    video_location = models.ForeignKey(VideoLocation, on_delete=models.CASCADE)
+    video_category = models.ForeignKey(VideoCategory, on_delete=models.CASCADE)
+
+    def save_video(self):
+        self.save()
+
+    def delete_video(self):
+        self.delete()
+
+    def update_video(self, video_name=None, video_description=None, video_image=None, video_location=None, video_category=None):
+        if video_name:
+            self.video_name = video_name
+        if video_description:
+            self.video_description = video_description
+        if video_image:
+            self.video_image = video_image
+        if video_location:
+            self.video_location = video_location
+        if video_category:
+            self.video_category = video_category
+        self.save()
+
+    @classmethod
+    def get_video_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id)
+        except cls.DoesNotExist:
+            return None
+
+    @classmethod
+    def search_video(cls, category):
+        return cls.objects.filter(video_category__name__icontains=category)
+
+    @classmethod
+    def filter_by_location(cls, location):
+        return cls.objects.filter(video_location__name__icontains=location)
+
+    def __str__(self):
+        return self.video_name
